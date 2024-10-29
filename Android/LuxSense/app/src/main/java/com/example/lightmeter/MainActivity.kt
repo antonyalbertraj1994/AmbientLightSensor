@@ -36,6 +36,8 @@ import android.widget.RelativeLayout
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.newFixedThreadPoolContext
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 
 class MainActivity : Activity(), SensorEventListener {
@@ -47,8 +49,12 @@ class MainActivity : Activity(), SensorEventListener {
     private lateinit var relativeLayout: RelativeLayout
     private lateinit var color_button: Button
     private var colorstate:Boolean? = null
+    private var colorstate_auto:Boolean? = null
 
     private var brightval = 255
+    private var flashspeed:Long = 100
+    private var timestart:Boolean?= null
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +64,11 @@ class MainActivity : Activity(), SensorEventListener {
         button_decrease = findViewById(R.id.decrease_bright)
         relativeLayout = findViewById(R.id.relativelayout1)
 
-        relativeLayout.setBackgroundColor(android.graphics.Color.BLACK)
+        relativeLayout.setBackgroundColor(android.graphics.Color.WHITE)
 
+
+        val view = CanvasView(this)
+        relativeLayout.addView(view)
 
         button_increase.setOnClickListener {
             // Handle button click
@@ -91,17 +100,22 @@ class MainActivity : Activity(), SensorEventListener {
         val time = lightSensor!!.minDelay
         checkWriteSettingsPermission()
         colorstate = true
+        colorstate_auto = true
 
         color_button = findViewById(R.id.background_change)
         color_button.setOnClickListener {
             if(colorstate == true) {
-            relativeLayout.setBackgroundColor(android.graphics.Color.WHITE)
-                lightvalueTextView.setTextColor(Color.BLACK)
+                //relativeLayout.setBackgroundColor(android.graphics.Color.WHITE)
+                //lightvalueTextView.setTextColor(Color.BLACK)
                 colorstate = false
+                view.setText("1")
+                view.invalidate()
             }else{
-                relativeLayout.setBackgroundColor(android.graphics.Color.BLACK)
-                lightvalueTextView.setTextColor(Color.WHITE)
+                //relativeLayout.setBackgroundColor(android.graphics.Color.BLACK)
+                //lightvalueTextView.setTextColor(Color.WHITE)
                 colorstate = true
+                view.setText("2")
+                view.invalidate()
             }
         }
         if (Settings.System.canWrite(this)) {
@@ -110,6 +124,22 @@ class MainActivity : Activity(), SensorEventListener {
             checkWriteSettingsPermission() // Ask for permission if not granted
         }
         Log.d("delaytime", "$time")
+        val timer = Timer()
+        timestart = false
+        if (timestart as Boolean) {
+            timer.schedule(0, flashspeed) {
+                if (colorstate_auto as Boolean) {
+                    view.setText("1")
+                    view.invalidate()
+                    colorstate_auto = false
+                } else {
+                    view.setText("2")
+                    view.invalidate()
+                    colorstate_auto = true
+                }
+
+            }
+        }
     }
 
     override fun onResume() {
@@ -170,3 +200,5 @@ class MainActivity : Activity(), SensorEventListener {
 
     }
 }
+
+
