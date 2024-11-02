@@ -5,7 +5,13 @@
 
 package com.example.lightmeter_watch.presentation
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.widget.Button
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -27,12 +33,42 @@ import com.example.lightmeter_watch.R
 import com.example.lightmeter_watch.presentation.theme.LightMeter_WatchTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var button_increase: Button
+    private lateinit var relativeLayout: RelativeLayout
+    private var colorstate:Boolean = false
+    private lateinit var sensorManager: SensorManager
+    private var lightSensor: Sensor? = null
+    private lateinit var lightvalueTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
-        setTheme(android.R.style.Theme_DeviceDefault)
+        setContentView(R.layout.activity_main);
+        relativeLayout = findViewById(R.id.relativelayout1)
+        val view = CanvasView(this)
+        relativeLayout.addView(view)
+
+        button_increase = findViewById(R.id.increase_bright)
+        button_increase.setOnClickListener {
+            println("Button Pressed")
+            if (colorstate == true){
+                view.setText("1")
+                view.invalidate()
+            } else {
+                view.setText("0")
+                view.invalidate()
+            }
+            colorstate = !colorstate;
+        }
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        if (lightSensor == null) {
+            lightvalueTextView.text = "NO light Sensor"
+
+        }
+
 
 //        setContent {
 //            WearApp("Android")
