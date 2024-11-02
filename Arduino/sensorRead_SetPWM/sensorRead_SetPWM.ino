@@ -11,5 +11,5 @@ int a = analogRead(A0);
 int pwm = int(a/4.0);
 analogWrite(3, pwm);
 Serial.println(pwm);
-delay(600);
+delay(50);
 }

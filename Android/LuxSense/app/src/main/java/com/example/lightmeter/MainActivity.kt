@@ -27,7 +27,9 @@ import androidx.constraintlayout.widget.ConstraintSet.Motion
 
 import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.hardware.SensorDirectChannel
 import android.net.Uri
 import android.provider.Settings
 import android.view.WindowManager
@@ -38,6 +40,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.newFixedThreadPoolContext
 import java.util.Timer
 import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 
 
 class MainActivity : Activity(), SensorEventListener {
@@ -48,8 +51,11 @@ class MainActivity : Activity(), SensorEventListener {
     private lateinit var button_decrease: Button
     private lateinit var relativeLayout: RelativeLayout
     private lateinit var color_button: Button
+    private lateinit var flashbutton: Button
+
     private var colorstate:Boolean? = null
     private var colorstate_auto:Boolean? = null
+
 
     private var brightval = 255
     private var flashspeed:Long = 100
@@ -63,12 +69,25 @@ class MainActivity : Activity(), SensorEventListener {
         button_increase = findViewById(R.id.increase_bright)
         button_decrease = findViewById(R.id.decrease_bright)
         relativeLayout = findViewById(R.id.relativelayout1)
-
-        relativeLayout.setBackgroundColor(android.graphics.Color.WHITE)
-
-
+        flashbutton = findViewById(R.id.flash);
         val view = CanvasView(this)
         relativeLayout.addView(view)
+
+
+
+        flashbutton.setOnClickListener {
+            val thread = Thread {
+                sendPulse(view)
+            }
+            thread.start()
+
+        }
+        relativeLayout.setBackgroundColor(android.graphics.Color.WHITE)
+
+        sensorList()
+
+
+
 
         button_increase.setOnClickListener {
             // Handle button click
@@ -97,6 +116,12 @@ class MainActivity : Activity(), SensorEventListener {
             lightvalueTextView.text = "NO light Sensor"
 
         }
+
+//        val channel = sensorManager.createDirectChannel(lightSensor,SensorDirectChannel.RATE_FAST)
+//        channel?.let {
+//            sensorManager.registerListener(this, lightSensor, it)
+//        }
+
         val time = lightSensor!!.minDelay
         checkWriteSettingsPermission()
         colorstate = true
@@ -124,28 +149,70 @@ class MainActivity : Activity(), SensorEventListener {
             checkWriteSettingsPermission() // Ask for permission if not granted
         }
         Log.d("delaytime", "$time")
-        val timer = Timer()
-        timestart = false
-        if (timestart as Boolean) {
-            timer.schedule(0, flashspeed) {
-                if (colorstate_auto as Boolean) {
-                    view.setText("1")
-                    view.invalidate()
-                    colorstate_auto = false
-                } else {
-                    view.setText("2")
-                    view.invalidate()
-                    colorstate_auto = true
-                }
-
-            }
-        }
+//        val timer = Timer()
+//        timestart = true
+//        if (timestart as Boolean) {
+//            timer.schedule(0, flashspeed) {
+//                if (colorstate_auto as Boolean) {
+//
+//                    view.setText("1")
+//                    view.invalidate()
+////                    runOnUiThread {
+////                    setBrightness(255)
+////                    }
+//                    colorstate_auto = false
+//                } else {
+//                    view.setText("2")
+//                    view.invalidate()
+////                    runOnUiThread {
+////                        setBrightness(0)
+////                    }
+//                    colorstate_auto = true
+//                }
+//
+//            }
+//        }
     }
 
+
+    fun sendPulse(view: CanvasView) {
+        val timer = Timer()
+         var colorstate_auto:Boolean = false
+        val values = intArrayOf(1,     1,0,1,0,1,0,1,1,      0) // one start bit and one stop bit
+        var i =0
+        val currenttime = System.currentTimeMillis()
+        timer.schedule(0, 50) {
+            if (values.get(9 - i) == 1){
+                view.setText("1")
+                view.invalidate()
+            } else {
+                view.setText("2")
+                view.invalidate()
+            }
+            //val elapsed = System.currentTimeMillis() - currenttime
+            //println("value:${values.get(i)}, Time:$elapsed")
+            i++
+            if(i ==10) {
+                timer.cancel()
+
+            }
+
+//            if(colorstate_auto) {
+//                view.setText("1")
+//                view.invalidate()
+//            } else {
+//                view.setText("2")
+//                view.invalidate()
+//            }
+//            colorstate_auto = !colorstate_auto
+
+        }
+
+    }
     override fun onResume() {
         super.onResume()
         lightSensor?.also {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_FASTEST)
+            sensorManager.registerListener(this, it,SensorManager.SENSOR_DELAY_FASTEST)
         }
     }
     private fun checkWriteSettingsPermission() {
@@ -174,6 +241,15 @@ class MainActivity : Activity(), SensorEventListener {
         }
         return super.onTouchEvent(event)
     }
+
+    fun sensorList(){
+        val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        val sensorList: List<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
+        sensorList.forEach{sensor: Sensor ->
+            println(sensor)
+        }
+    }
     override fun onSensorChanged(event: SensorEvent?) {
 
 
@@ -200,5 +276,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     }
 }
+
+
 
 
