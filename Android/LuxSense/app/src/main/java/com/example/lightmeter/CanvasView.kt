@@ -34,7 +34,7 @@ class CanvasView(context: Context, attrs: AttributeSet? = null) : View(context, 
 
 
         // Set paint color and style for rectangle
-        if(text1=="2") {
+        if(text1=="0") {
 
             //println("2")
             canvas.drawRect(300f, 1400f, 500f, 1600f, paint1)

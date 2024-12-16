@@ -9,59 +9,85 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/light_level1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Light Level: "
-        android:textColor="@color/teal_200"
-        android:textSize="56sp" />
-
-    <TextView
-        android:id="@+id/light_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="100dp"
-        android:text="Light Level: "
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/teal_200"
-        android:textSize="56sp" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:id="@+id/increase_bright"
-        android:textSize="24sp"
-        android:layout_alignParentBottom="true"
-        android:text="+"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:id="@+id/flash"
         android:textSize="24sp"
-        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
         android:text="FLASH"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/decrease_bright"
-        android:textSize="24sp"
-        android:text="-"/>
+<!--    <com.example.lightmeter.FlashingSquareSurfaceView-->
+<!--        android:id="@+id/flashing_square_surface_view"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        />-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:id="@+id/background_change"
-        android:textSize="24sp"
+<!--        <com.example.lightmeter.FlashingSquareView-->
+<!--            android:id="@+id/flashing_square_surface_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+
+
+    <TextView
+        android:id="@+id/light_level1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:text="Change"/>
+        android:layout_marginBottom="40dp"
+        android:background="@color/black"
+        android:layout_marginLeft="40dp"/>
+
+<!--        android:text=""-->
+<!--        android:background="@color/white"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="56sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/light_level"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="400dp"-->
+<!--        android:layout_marginLeft="100dp"-->
+<!--        android:text="Light Level: "-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:textColor="@color/teal_200"-->
+<!--        android:textSize="56sp" />-->
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:id="@+id/increase_bright"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="+"/>-->
+
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:id="@+id/flash"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="FLASH"/>-->
+
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:id="@+id/decrease_bright"-->
+<!--        android:textSize="24sp"-->
+<!--        android:text="-"/>-->
+
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="150dp"-->
+<!--        android:id="@+id/background_change"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="Change"/>-->
 </RelativeLayout>

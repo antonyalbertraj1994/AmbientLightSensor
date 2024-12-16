@@ -1,5 +1,5 @@
-int value[] = {1,1,0,0,1,1,1,1};
-int delayms = 50;
+int value[] = {1,0,1,0,1,0,1,0};
+int delayms = 5;
 void setup() {
   // put your setup code here, to run once:
 pinMode(2, OUTPUT);
@@ -8,19 +8,23 @@ Serial.begin(9600);
 }
 
 void loop() {
-  digitalWrite(2, HIGH);
-  // put your main code here, to run repeatedly:
-  if(digitalRead(4) == LOW) {
-    //Serial.println("A");
-    while (digitalRead(4) == LOW) {
+   digitalWrite(2, HIGH);
+  // delay(delayms);
+  // digitalWrite(2, LOW);
+  // delay(delayms);
 
+  if(digitalRead(4) == LOW) {
+    Serial.println("A");
+    while (digitalRead(4) == LOW) {
     }
     digitalWrite(2, LOW);
-    delayMicroseconds(delayms);
+    delay(delayms);
     for(int i = 0; i < 8; i++) {
       digitalWrite(2, value[7 - i]);
-      delayMicroseconds(delayms);
+      delay(delayms);
     }
+    digitalWrite(2, HIGH);
+    delay(delayms);
   }
 
 }

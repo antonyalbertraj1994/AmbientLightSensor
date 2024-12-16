@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/light_level"
+        android:layout_width="129dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="false"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="115dp"
+        android:text="Light Level: "
+
+        android:textSize="40sp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/flash"
+        android:textSize="24sp"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="FLASH"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/off"
+        android:textSize="24sp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:text="OFF"/>
+
+    <TextView
+
+        android:id="@+id/light_level1"
+        android:layout_width="65dp"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-13dp"
+        android:layout_marginRight="84dp"
+        android:layout_marginBottom="168dp"
+        android:text="" />
+</RelativeLayout>

@@ -15,7 +15,7 @@ int value = val.toInt();
 
 analogWrite(3, value);
 Serial.println(value);
-delay(600);
+delay(10);
 }
 
 }
